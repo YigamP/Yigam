@@ -1,5 +1,11 @@
+import Routers from './constant/route';
+
 function App() {
-    return <></>;
+    return (
+        <>
+            <Routers />
+        </>
+    );
 }
 
 export default App;
