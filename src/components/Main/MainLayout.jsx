@@ -12,7 +12,7 @@ import TableRow from '@mui/material/TableRow';
 import { useState } from 'react';
 
 const columns = [
-    { id: 'number', label: '번호', minWidth: 50 },
+    { id: 'number', label: '번호', minWidth: 70 },
     { id: 'question', label: '질문 내용', minWidth: 350 },
     {
         id: 'answer',

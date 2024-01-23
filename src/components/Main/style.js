@@ -12,12 +12,19 @@ export const MainContainer = styled(Container)`
     .MuiTableCell-root {
         overflow-y: auto;
         div {
+            width: 100%;
+            display: flex;
+            align-items: center;
             height: 50px;
         }
     }
 
     .MuiTableCell-root:nth-child(1) {
         text-align: center;
+
+        div {
+            justify-content: center;
+        }
     }
 `;
 
