@@ -44,4 +44,8 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
 }
+
+.body-content {
+	min-height: calc(100vh - 174px);
+}
 `;
