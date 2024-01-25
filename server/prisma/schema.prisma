@@ -10,9 +10,60 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  password String
-  nickname  String
+// Enum 정의
+enum user_type_enum {
+  normal
+  google
+  kakao
+}
+
+enum user_role_enum {
+  user
+  admin
+}
+
+enum inquiry_status_enum {
+  wait
+  complete
+}
+
+// USER 테이블
+model USER {
+  id          Int      @id @default(autoincrement())
+  type        user_type_enum @default(normal)
+  email       String   @unique
+  password    String
+  nickname    String
+  role        user_role_enum @default(user)
+  deleted_at  DateTime? @db.DateTime(0)
+  inquiries   INQUIRY[]
+  search_histories SEARCH_HISTORY[]
+}
+
+// INQUIRY 테이블
+model INQUIRY {
+  id               Int       @id @default(autoincrement())
+  user_email       String
+  inquiry_content  String
+  status           inquiry_status_enum @default(wait)
+  created_at       DateTime  @default(now())
+  deleted_at       DateTime? @db.DateTime(0)
+  user             USER      @relation(fields: [user_email], references: [email])
+}
+
+// SEARCH_HISTORY 테이블
+model SEARCH_HISTORY {
+  id           Int       @id @default(autoincrement())
+  user_email   String
+  nickname     String
+  search       String
+  created_at   DateTime  @default(now())
+  user         USER      @relation(fields: [user_email], references: [email])
+}
+
+// DOCUMENT 테이블
+model DOCUMENT {
+  id        Int      @id @default(autoincrement())
+  question  String
+  answer    String
 }
