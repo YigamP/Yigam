@@ -2,7 +2,7 @@ import { Wrapper } from '../../commons/styles/style';
 import * as S from './style';
 import SubTitle from '../commons/titles/SubTitle';
 
-const AdminInquiryLayout = () => {
+const AdminSearchHistoryLayout = () => {
     return (
         <Wrapper>
             <S.AdminContainer>
@@ -39,4 +39,4 @@ const AdminInquiryLayout = () => {
     );
 };
 
-export default AdminInquiryLayout;
+export default AdminSearchHistoryLayout;
