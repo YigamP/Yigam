@@ -1,0 +1,32 @@
+{
+    "name": "yigam-back",
+    "version": "0.0.0",
+    "type": "module",
+    "private": true,
+    "scripts": {
+        "start": "nodemon --exec babel-node app.js --delay 2"
+    },
+    "dependencies": {
+        "@babel/cli": "^7.23.4",
+        "@babel/core": "^7.23.7",
+        "@babel/node": "^7.22.19",
+        "@babel/preset-env": "^7.23.8",
+        "@prisma/client": "^5.8.1",
+        "cookie-parser": "~1.4.4",
+        "core-js": "^3.35.1",
+        "debug": "~2.6.9",
+        "eslint-config-airbnb-base": "^15.0.0",
+        "eslint-config-prettier": "^9.1.0",
+        "eslint-plugin-import": "^2.29.1",
+        "express": "~4.16.1",
+        "http-errors": "~1.6.3",
+        "jade": "~1.11.0",
+        "morgan": "~1.9.1",
+        "nodemon": "^3.0.3",
+        "prettier": "^3.2.4"
+    },
+    "devDependencies": {
+        "eslint": "^8.56.0",
+        "prisma": "^5.8.1"
+    }
+}
