@@ -2,36 +2,31 @@ import { Wrapper } from '../../commons/styles/style';
 import * as S from './style';
 import SubTitle from '../commons/titles/SubTitle';
 
-const AdminSearchHistoryLayout = () => {
+const AdminInquiryLayout = () => {
     return (
         <Wrapper>
             <S.AdminContainer>
                 <SubTitle title="관리자 - 검색내역" />
-                <S.ListHead>
+                <S.ListHead style={{ padding: '0' }}>
                     <S.SmallBox style={{ textAlign: 'center' }}>No.</S.SmallBox>
-                    <S.LargeBox style={{ paddingLeft: '10px' }}>이메일</S.LargeBox>
-                    <S.boxContainer>닉네임</S.boxContainer>
-                    <S.boxContainer style={{ textAlign: 'center' }}>가입날짜</S.boxContainer>
-                    <S.SmallBox style={{ textAlign: 'center' }}>권한</S.SmallBox>
-                    <S.SmallBox></S.SmallBox>
+                    <S.SmallBox>닉네임</S.SmallBox>
+                    <S.boxContainer>이메일</S.boxContainer>
+                    <S.BigLargeBox>
+                        <S.ScrollContainer>검색내용</S.ScrollContainer>
+                    </S.BigLargeBox>
+                    <S.SmallBox style={{ textAlign: 'center' }}>검색시간</S.SmallBox>
                 </S.ListHead>
                 {new Array(11).fill().map((_el, index) => (
-                    <S.ListOfLists key={index}>
+                    <S.ListOfLists style={{ padding: '0' }} key={index}>
                         <S.SmallBox style={{ textAlign: 'center' }}>{index + 1}</S.SmallBox>
-                        <S.ReportProfile>
-                            <S.MediumBox>이메일</S.MediumBox>
-                        </S.ReportProfile>
-                        <S.boxContainer>닉네임</S.boxContainer>
-                        <S.boxContainer style={{ textAlign: 'center' }}>2020.01.01</S.boxContainer>
-                        <S.SmallBox>
-                            <S.IdHandleSelect>
-                                <option value="">유저</option>
-                                <option value="">관리자</option>
-                            </S.IdHandleSelect>
-                        </S.SmallBox>
-                        <S.SmallBox>
-                            <S.Button>탈퇴</S.Button>
-                        </S.SmallBox>
+                        <S.SmallBox>닉네임</S.SmallBox>
+                        <S.boxContainer>이메일</S.boxContainer>
+                        <S.BigLargeBox>
+                            <S.ScrollContainer>
+                                <S.ScrollText>검색내용</S.ScrollText>
+                            </S.ScrollContainer>
+                        </S.BigLargeBox>
+                        <S.SmallBox style={{ textAlign: 'center' }}>검색시간</S.SmallBox>
                     </S.ListOfLists>
                 ))}
             </S.AdminContainer>
@@ -39,4 +34,4 @@ const AdminSearchHistoryLayout = () => {
     );
 };
 
-export default AdminSearchHistoryLayout;
+export default AdminInquiryLayout;

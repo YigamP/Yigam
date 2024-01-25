@@ -7,20 +7,28 @@ export const AdminContainer = styled(Container)`
 
 export const ListOfLists = styled.div`
     width: 100%;
-    padding-left: 2%;
     display: flex;
     align-items: center;
     font-size: 16px;
     border-bottom: 1px solid #e7e7e7;
-    padding: 2.3rem 0;
-
+    padding: 20px 0;
     p {
         font-size: 16px;
     }
 
-    &:hover {
+    &:hali {
         background-color: #d6d5d5;
     }
+`;
+
+export const ScrollText = styled.pre`
+    width: 100%;
+    font-weight: 400;
+    color: #111;
+    display: flex;
+    align-items: center;
+    line-height: 1.3;
+    word-break: break-all;
 `;
 
 export const ReportProfile = styled.div`
@@ -45,6 +53,12 @@ export const boxContainer = styled.div`
 
 export const LargeBox = styled.div`
     width: 30%;
+`;
+
+export const BigLargeBox = styled.div`
+    width: 50%;
+    height: 100px;
+    padding: 10px 0;
 `;
 
 export const IdHandleSelect = styled.select`
@@ -95,4 +109,12 @@ export const ListHead = styled.div`
     font-size: 15px;
     padding: 20px 0;
     border-bottom: 1px solid #ddd;
+`;
+
+export const ScrollContainer = styled.div`
+    width: 100%;
+    height: 80px;
+    overflow-y: auto;
+    display: flex;
+    align-items: center;
 `;
