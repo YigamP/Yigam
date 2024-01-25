@@ -5,6 +5,8 @@ import LoginPage from '../pages/Login';
 import { GlobalStyles } from '../commons/styles/GlobalStyle';
 import JoinPage from '../pages/Join';
 import AdminPage from '../pages/Admin';
+import AdminSearchHistoryPage from '../pages/AdminSearchHistory';
+import AdminInquiryPage from '../pages/AdminInquiry';
 
 const Routers = () => {
     return (
@@ -15,6 +17,8 @@ const Routers = () => {
                     <Route path="/" element={<Home />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/join" element={<JoinPage />} />
+                    <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
+                    <Route path="/admin/search_history" element={<AdminSearchHistoryPage />} />
                     <Route path="/admin" element={<AdminPage />} />
                 </Routes>
             </Layout>
