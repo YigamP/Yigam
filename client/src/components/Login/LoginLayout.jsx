@@ -12,7 +12,9 @@ const LoginLayout = () => {
         <Wrapper>
             <Container>
                 <S.LoginContainer>
-                    <SubTitle title="로그인" />
+                    <S.TitleContainer>
+                        <SubTitle title="로그인" />
+                    </S.TitleContainer>
                     <S.InputContainer>
                         <TextInput title="이메일" helperText="이메일을 입력해주세요." />
                     </S.InputContainer>

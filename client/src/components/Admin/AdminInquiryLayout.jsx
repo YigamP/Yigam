@@ -1,18 +1,22 @@
 import { Wrapper } from '../../commons/styles/style';
 import * as S from './style';
 import SubTitle from '../commons/titles/SubTitle';
+import SecondTitle from '../commons/titles/SecondTitle';
 
-const AdminSearchHistoryLayout = () => {
+const AdminInquiryLayout = () => {
     return (
         <Wrapper>
             <S.AdminContainer>
                 <SubTitle title="관리자 - 문의내역" />
+                <S.SecondTitleContainer>
+                    <SecondTitle title="회원들이 문의한 내용을 확인하고, csv 형식으로 내려 받을 수 있습니다" />
+                </S.SecondTitleContainer>
                 <S.ListHead>
                     <S.SmallBox style={{ textAlign: 'center' }}>No.</S.SmallBox>
-                    <S.LargeBox style={{ paddingLeft: '10px' }}>이메일</S.LargeBox>
-                    <S.boxContainer>닉네임</S.boxContainer>
-                    <S.boxContainer style={{ textAlign: 'center' }}>가입날짜</S.boxContainer>
-                    <S.SmallBox style={{ textAlign: 'center' }}>권한</S.SmallBox>
+                    <S.LargeBox style={{ paddingLeft: '10px' }}>문의자 이메일</S.LargeBox>
+                    <S.boxContainer>문의내용</S.boxContainer>
+                    <S.boxContainer style={{ textAlign: 'center' }}>문의날짜</S.boxContainer>
+                    <S.SmallBox style={{ textAlign: 'center' }}>상태</S.SmallBox>
                     <S.SmallBox></S.SmallBox>
                 </S.ListHead>
                 {new Array(11).fill().map((_el, index) => (
@@ -21,16 +25,16 @@ const AdminSearchHistoryLayout = () => {
                         <S.ReportProfile>
                             <S.MediumBox>이메일</S.MediumBox>
                         </S.ReportProfile>
-                        <S.boxContainer>닉네임</S.boxContainer>
+                        <S.boxContainer>누의내용</S.boxContainer>
                         <S.boxContainer style={{ textAlign: 'center' }}>2020.01.01</S.boxContainer>
                         <S.SmallBox>
                             <S.IdHandleSelect>
-                                <option value="">유저</option>
-                                <option value="">관리자</option>
+                                <option value="">대기</option>
+                                <option value="">완료</option>
                             </S.IdHandleSelect>
                         </S.SmallBox>
                         <S.SmallBox>
-                            <S.Button>탈퇴</S.Button>
+                            <S.Button>삭제</S.Button>
                         </S.SmallBox>
                     </S.ListOfLists>
                 ))}
@@ -39,4 +43,4 @@ const AdminSearchHistoryLayout = () => {
     );
 };
 
-export default AdminSearchHistoryLayout;
+export default AdminInquiryLayout;

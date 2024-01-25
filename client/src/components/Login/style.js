@@ -60,3 +60,7 @@ export const LinkText = styled.p`
         color: #5429ff;
     }
 `;
+
+export const TitleContainer = styled.div`
+    margin-bottom: 30px;
+`;
