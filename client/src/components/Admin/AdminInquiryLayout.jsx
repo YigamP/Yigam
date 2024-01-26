@@ -2,12 +2,19 @@ import { Wrapper } from '../../commons/styles/style';
 import * as S from './style';
 import SubTitle from '../commons/titles/SubTitle';
 import SecondTitle from '../commons/titles/SecondTitle';
+import { PiDownloadSimpleBold } from 'react-icons/pi';
 
 const AdminInquiryLayout = () => {
     return (
         <Wrapper>
             <S.AdminContainer>
-                <SubTitle title="관리자 - 문의내역" />
+                <S.BetweenBox>
+                    <SubTitle title="관리자 - 문의내역" />
+                    <S.DataBtn color="#fff" style={{ fontSize: '20px' }}>
+                        <span>엑셀 다운로드</span>
+                        <PiDownloadSimpleBold />
+                    </S.DataBtn>
+                </S.BetweenBox>
                 <S.SecondTitleContainer>
                     <SecondTitle title="회원들이 문의한 내용을 확인하고, csv 형식으로 내려 받을 수 있습니다" />
                 </S.SecondTitleContainer>

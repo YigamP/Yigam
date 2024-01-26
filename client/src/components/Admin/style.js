@@ -147,3 +147,8 @@ export const DataBtn = styled.button`
         color: ${({ color }) => (color === '#fff' ? '#111' : '#fff')};
     }
 `;
+
+export const BetweenBox = styled.div`
+    display: flex;
+    gap: 20px;
+`;
