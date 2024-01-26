@@ -3,8 +3,28 @@ import * as S from './style';
 import SubTitle from '../commons/titles/SubTitle';
 import SecondTitle from '../commons/titles/SecondTitle';
 import { PiDownloadSimpleBold } from 'react-icons/pi';
+import * as API from '../../api/index.js';
+import { useEffect, useState } from 'react';
+import { scrollToTop } from '../../commons/util';
+import { Pagination, Stack } from '@mui/material';
 
 const AdminInquiryLayout = () => {
+    const [inquiryData, setInquiryData] = useState([]);
+    const [page, setPage] = useState(1);
+
+    const handleChangePage = (_e, page) => {
+        scrollToTop();
+        setPage(page);
+    };
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const { data } = await API.get(`/inquires?page=${page}`);
+            setInquiryData(data);
+        };
+        getUsers();
+    }, [page]);
+
     return (
         <Wrapper>
             <S.AdminContainer>
@@ -26,18 +46,26 @@ const AdminInquiryLayout = () => {
                     <S.SmallBox style={{ textAlign: 'center' }}>상태</S.SmallBox>
                     <S.SmallBox></S.SmallBox>
                 </S.ListHead>
-                {new Array(11).fill().map((_el, index) => (
+                {inquiryData?.inquires?.map((inquiry, index) => (
                     <S.ListOfLists key={index}>
-                        <S.SmallBox style={{ textAlign: 'center' }}>{index + 1}</S.SmallBox>
+                        <S.SmallBox style={{ textAlign: 'center' }}>
+                            {index + 1 + (page - 1) * 10}
+                        </S.SmallBox>
                         <S.ReportProfile>
-                            <S.MediumBox>이메일</S.MediumBox>
+                            <S.MediumBox>{inquiry?.user_email}</S.MediumBox>
                         </S.ReportProfile>
-                        <S.boxContainer>누의내용</S.boxContainer>
-                        <S.boxContainer style={{ textAlign: 'center' }}>2020.01.01</S.boxContainer>
+                        <S.boxContainer>{inquiry?.inquiry_content}</S.boxContainer>
+                        <S.boxContainer style={{ textAlign: 'center' }}>
+                            {inquiry?.created_at.slice(0, 10)}
+                        </S.boxContainer>
                         <S.SmallBox>
-                            <S.IdHandleSelect>
-                                <option value="">대기</option>
-                                <option value="">완료</option>
+                            <S.IdHandleSelect
+                                onChange={() => {}}
+                                disabled={inquiry?.status === 'complete'}
+                                value={inquiry?.status === 'wait' ? 'wait' : 'complete'}
+                            >
+                                <option value="wait">대기</option>
+                                <option value="complete">완료</option>
                             </S.IdHandleSelect>
                         </S.SmallBox>
                         <S.SmallBox>
@@ -45,6 +73,18 @@ const AdminInquiryLayout = () => {
                         </S.SmallBox>
                     </S.ListOfLists>
                 ))}
+                <S.PaginationContainer>
+                    <Stack spacing={2}>
+                        <Pagination
+                            defaultValue={1}
+                            page={page}
+                            count={inquiryData?.totalPages}
+                            variant="outlined"
+                            shape="rounded"
+                            onChange={handleChangePage}
+                        />
+                    </Stack>
+                </S.PaginationContainer>
             </S.AdminContainer>
         </Wrapper>
     );

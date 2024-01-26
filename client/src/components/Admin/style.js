@@ -152,3 +152,11 @@ export const BetweenBox = styled.div`
     display: flex;
     gap: 20px;
 `;
+
+export const PaginationContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
+`;

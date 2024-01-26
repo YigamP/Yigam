@@ -4,19 +4,26 @@ import SubTitle from '../commons/titles/SubTitle';
 import SecondTitle from '../commons/titles/SecondTitle';
 import * as API from '../../api/index.js';
 import { useEffect, useState } from 'react';
+import Pagination from '@mui/material/Pagination';
+import Stack from '@mui/material/Stack';
+import { scrollToTop } from '../../commons/util/index.js';
 
 const AdminLayout = () => {
-    const [users, setUsers] = useState([]);
+    const [userData, setUserData] = useState([]);
+    const [page, setPage] = useState(1);
 
-    console.log(users);
+    const handleChangePage = (_e, page) => {
+        scrollToTop();
+        setPage(page);
+    };
 
     useEffect(() => {
         const getUsers = async () => {
-            const { data } = await API.get('/users');
-            setUsers(data);
+            const { data } = await API.get(`/users?page=${page}`);
+            setUserData(data);
         };
         getUsers();
-    }, []);
+    }, [page]);
 
     return (
         <Wrapper>
@@ -29,22 +36,33 @@ const AdminLayout = () => {
                     <S.SmallBox style={{ textAlign: 'center' }}>No.</S.SmallBox>
                     <S.LargeBox style={{ paddingLeft: '10px' }}>이메일</S.LargeBox>
                     <S.boxContainer>닉네임</S.boxContainer>
-                    <S.boxContainer style={{ textAlign: 'center' }}>가입날짜</S.boxContainer>
+                    <S.boxContainer style={{ textAlign: 'center' }}>로그인 타입</S.boxContainer>
                     <S.SmallBox style={{ textAlign: 'center' }}>권한</S.SmallBox>
                     <S.SmallBox></S.SmallBox>
                 </S.ListHead>
-                {new Array(11).fill().map((_el, index) => (
+                {userData?.users?.map((user, index) => (
                     <S.ListOfLists key={index}>
-                        <S.SmallBox style={{ textAlign: 'center' }}>{index + 1}</S.SmallBox>
+                        <S.SmallBox style={{ textAlign: 'center' }}>
+                            {index + 1 + (page - 1) * 10}
+                        </S.SmallBox>
                         <S.ReportProfile>
-                            <S.MediumBox>이메일</S.MediumBox>
+                            <S.MediumBox>{user?.email}</S.MediumBox>
                         </S.ReportProfile>
-                        <S.boxContainer>닉네임</S.boxContainer>
-                        <S.boxContainer style={{ textAlign: 'center' }}>2020.01.01</S.boxContainer>
+                        <S.boxContainer>{user?.nickname}</S.boxContainer>
+                        <S.boxContainer style={{ textAlign: 'center' }}>
+                            {user?.type === 'normal'
+                                ? '일반'
+                                : user?.type === 'google'
+                                  ? '구글'
+                                  : '카카오'}
+                        </S.boxContainer>
                         <S.SmallBox>
-                            <S.IdHandleSelect>
-                                <option value="">유저</option>
-                                <option value="">관리자</option>
+                            <S.IdHandleSelect
+                                onChange={() => {}}
+                                value={user?.role === 'user' ? 'user' : 'admin'}
+                            >
+                                <option value="user">유저</option>
+                                <option value="admin">관리자</option>
                             </S.IdHandleSelect>
                         </S.SmallBox>
                         <S.SmallBox>
@@ -52,6 +70,18 @@ const AdminLayout = () => {
                         </S.SmallBox>
                     </S.ListOfLists>
                 ))}
+                <S.PaginationContainer>
+                    <Stack spacing={2}>
+                        <Pagination
+                            defaultValue={1}
+                            page={page}
+                            count={userData?.totalPages}
+                            variant="outlined"
+                            shape="rounded"
+                            onChange={handleChangePage}
+                        />
+                    </Stack>
+                </S.PaginationContainer>
             </S.AdminContainer>
         </Wrapper>
     );
