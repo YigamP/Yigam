@@ -2,8 +2,22 @@ import { Wrapper } from '../../commons/styles/style';
 import * as S from './style';
 import SubTitle from '../commons/titles/SubTitle';
 import SecondTitle from '../commons/titles/SecondTitle';
+import * as API from '../../api/index.js';
+import { useEffect, useState } from 'react';
 
 const AdminLayout = () => {
+    const [users, setUsers] = useState([]);
+
+    console.log(users);
+
+    useEffect(() => {
+        const getUsers = async () => {
+            const { data } = await API.get('/users');
+            setUsers(data);
+        };
+        getUsers();
+    }, []);
+
     return (
         <Wrapper>
             <S.AdminContainer>

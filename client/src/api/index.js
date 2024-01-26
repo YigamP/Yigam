@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const backendPort = '5001';
+const backendPort = '8000';
 const serverUrl = 'http://' + window.location.hostname + ':' + backendPort;
 const imgUrl = 'http://' + window.location.hostname + ':' + backendPort + '/uploads/';
 
