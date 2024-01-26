@@ -10,11 +10,43 @@ import { Pagination, Stack } from '@mui/material';
 
 const AdminInquiryLayout = () => {
     const [inquiryData, setInquiryData] = useState([]);
+    const [rows, setRows] = useState([]);
     const [page, setPage] = useState(1);
 
     const handleChangePage = (_e, page) => {
         scrollToTop();
         setPage(page);
+    };
+
+    const handleDownload = () => {
+        if (!window.confirm('문의내역이 전체 다운로드 됩니다.')) {
+            return;
+        }
+        const csvRows = [
+            ['No.', '유저 이메일', '유저 닉네임', '검색기록', '검색시간'], // headers
+            ...rows.map(row => [
+                row.id,
+                row.user_email,
+                row.nickname,
+                row.search_history,
+                row.created_at
+            ]) // data
+        ];
+
+        const csvContent = '\uFEFF' + csvRows.map(e => e.join(',')).join('\n'); // Add BOM
+
+        const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+
+        const link = document.createElement('a');
+        link.setAttribute('href', url);
+        link.setAttribute('download', 'inquiries.csv');
+        document.body.appendChild(link); // Required for FF
+
+        link.click(); // This will download the data file named "inquiries.csv".
+
+        document.body.removeChild(link); // Clean up
+        URL.revokeObjectURL(url); // Free up storage--no longer needed.
     };
 
     useEffect(() => {
@@ -30,7 +62,7 @@ const AdminInquiryLayout = () => {
             <S.AdminContainer>
                 <S.BetweenBox>
                     <SubTitle title="관리자 - 문의내역" />
-                    <S.DataBtn color="#fff" style={{ fontSize: '20px' }}>
+                    <S.DataBtn color="#fff" style={{ fontSize: '20px' }} onClick={handleDownload}>
                         <span>엑셀 다운로드</span>
                         <PiDownloadSimpleBold />
                     </S.DataBtn>
