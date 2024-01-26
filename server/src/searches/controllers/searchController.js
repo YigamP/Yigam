@@ -1,9 +1,9 @@
-import { UserService } from '../services/userService.js';
+import { SearchHistoryService } from '../services/searchService.js';
 
-class UserController {
-    static async getUserController(req, res) {
+class SearchController {
+    static async getSearchHistory(req, res) {
         try {
-            const users = await UserService.getUserService();
+            const users = await SearchHistoryService.getSearchHistory();
             res.json(users);
         } catch (err) {
             throw new Error(err);
@@ -11,4 +11,4 @@ class UserController {
     }
 }
 
-export { UserController };
+export { SearchController };

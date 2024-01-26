@@ -14,6 +14,7 @@ app.use(cookieParser());
 
 app.use('/users', UserRouter);
 app.use('/inquires', InquiryRouter);
+app.use('/searches', InquiryRouter);
 
 app.use((req, res, next) => {
     next(createError(404));

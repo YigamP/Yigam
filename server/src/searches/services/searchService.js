@@ -1,9 +1,9 @@
-import { UserRepository } from '../repositories/userRepository.js';
+import { SearchHistoryRepository } from '../repositories/searchRepository.js';
 
-class UserService {
-    static async getUserService() {
+class SearchHistoryService {
+    static async getSearchHistory() {
         try {
-            const users = await UserRepository.getUsers();
+            const users = await SearchHistoryRepository.getSearchHistory();
 
             return users;
         } catch (err) {
@@ -12,4 +12,4 @@ class UserService {
     }
 }
 
-export { UserService };
+export { SearchHistoryService };
