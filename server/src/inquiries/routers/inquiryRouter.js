@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import { UserController } from '../controllers/userController.js';
+import { InquiryController } from '../controllers/inquiryController.js';
 
-const UserRouter = Router();
+const InquiryRouter = Router();
 
-UserRouter.get('/', UserController.getUserController);
+InquiryRouter.get('/', InquiryController.getInquires);
 
-export { UserRouter };
+export { InquiryRouter };

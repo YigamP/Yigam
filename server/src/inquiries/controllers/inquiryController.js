@@ -1,14 +1,14 @@
-import { UserService } from '../services/userService.js';
+import { InquiryService } from '../services/inquiryService.js';
 
-class UserController {
-    static async getUserController(req, res) {
+class InquiryController {
+    static async getInquires(req, res) {
         try {
-            const users = await UserService.getUserService();
-            res.json(users);
+            const inquires = await InquiryService.getInquiries();
+            res.json(inquires);
         } catch (err) {
             throw new Error(err);
         }
     }
 }
 
-export { UserController };
+export { InquiryController };

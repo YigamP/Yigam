@@ -3,6 +3,7 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { UserRouter } from './src/users/routers/userRouter.js';
+import { InquiryRouter } from './src/inquiries/routers/inquiryRouter.js';
 
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use('/users', UserRouter);
+app.use('/inquires', InquiryRouter);
 
 app.use((req, res, next) => {
     next(createError(404));

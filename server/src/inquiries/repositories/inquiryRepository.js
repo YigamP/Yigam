@@ -2,14 +2,14 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-class UserRepository {
-    static async getUsers() {
+class InquiryRepository {
+    static async getInquiries() {
         try {
-            return await prisma.user.findMany();
+            return await prisma.inquiry.findMany();
         } catch (err) {
             throw new Error(err);
         }
     }
 }
 
-export { UserRepository };
+export { InquiryRepository };

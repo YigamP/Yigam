@@ -1,15 +1,15 @@
-import { UserRepository } from '../repositories/userRepository.js';
+import { InquiryRepository } from '../repositories/inquiryRepository.js';
 
-class UserService {
-    static async getUserService() {
+class InquiryService {
+    static async getInquiries() {
         try {
-            const users = await UserRepository.getUsers();
+            const inquires = await InquiryRepository.getInquiries();
 
-            return users;
+            return inquires;
         } catch (err) {
             throw new Error(err);
         }
     }
 }
 
-export { UserService };
+export { InquiryService };
