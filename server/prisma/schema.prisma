@@ -28,7 +28,7 @@ enum inquiry_status_enum {
 }
 
 // USER 테이블
-model USER {
+model user {
   id          Int      @id @default(autoincrement())
   type        user_type_enum @default(normal)
   email       String   @unique
@@ -36,33 +36,33 @@ model USER {
   nickname    String
   role        user_role_enum @default(user)
   deleted_at  DateTime? @db.DateTime(0)
-  inquiries   INQUIRY[]
-  search_histories SEARCH_HISTORY[]
+  inquiries   inquiry[]
+  search_histories search_history[]
 }
 
 // INQUIRY 테이블
-model INQUIRY {
+model inquiry {
   id               Int       @id @default(autoincrement())
   user_email       String
   inquiry_content  String
   status           inquiry_status_enum @default(wait)
   created_at       DateTime  @default(now())
   deleted_at       DateTime? @db.DateTime(0)
-  user             USER      @relation(fields: [user_email], references: [email])
+  user             user      @relation(fields: [user_email], references: [email])
 }
 
 // SEARCH_HISTORY 테이블
-model SEARCH_HISTORY {
+model search_history {
   id           Int       @id @default(autoincrement())
   user_email   String
   nickname     String
   search       String
   created_at   DateTime  @default(now())
-  user         USER      @relation(fields: [user_email], references: [email])
+  user         user      @relation(fields: [user_email], references: [email])
 }
 
 // DOCUMENT 테이블
-model DOCUMENT {
+model document {
   id        Int      @id @default(autoincrement())
   question  String
   answer    String
