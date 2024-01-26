@@ -15,6 +15,16 @@ class InquiryService {
             throw new Error(err);
         }
     }
+
+    static async getAllInquiries() {
+        try {
+            const inquires = await InquiryRepository.getAllInquiries();
+
+            return inquires;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryService };

@@ -21,6 +21,14 @@ class InquiryRepository {
             throw new Error(err);
         }
     }
+
+    static async getAllInquiries() {
+        try {
+            return await prisma.inquiry.findMany();
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryRepository };

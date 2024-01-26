@@ -20,7 +20,7 @@ app.use(
 );
 
 app.use('/users', UserRouter);
-app.use('/inquires', InquiryRouter);
+app.use('/inquiries', InquiryRouter);
 app.use('/searches', SearchRouter);
 
 app.use((req, res, next) => {

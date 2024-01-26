@@ -10,7 +10,7 @@ import { Pagination, Stack } from '@mui/material';
 
 const AdminSearchHistoryLayout = () => {
     const [searchData, setSearchData] = useState([]);
-    const [rows, setRows] = useState([]);
+    const [searchDataAll, setSearchDataAll] = useState([]);
     const [page, setPage] = useState(1);
 
     const handleChangePage = (_e, page) => {
@@ -19,12 +19,12 @@ const AdminSearchHistoryLayout = () => {
     };
 
     const handleDownload = () => {
-        if (!window.confirm('검색 기록이 전체 다운로드 됩니다.')) {
+        if (!window.confirm('검색 기록을 전체 다운로드 합니다.')) {
             return;
         }
         const csvRows = [
             ['No.', '유저 이메일', '유저 닉네임', '검색기록', '검색시간'], // headers
-            ...rows.map(row => [
+            ...searchDataAll.map(row => [
                 row.id,
                 row.user_email,
                 row.nickname,
@@ -53,18 +53,26 @@ const AdminSearchHistoryLayout = () => {
         const getUsers = async () => {
             const { data } = await API.get(`/searches?page=${page}`);
             setSearchData(data);
+        };
+        getUsers();
+    }, [page]);
 
-            const formattedRows = data.searches.map(search => ({
+    useEffect(() => {
+        const getAllInquiry = async () => {
+            const { data } = await API.get('/searches/all');
+            console.log(data);
+            const formattedRows = data.map(search => ({
                 id: search.id,
                 user_email: search.user_email,
                 nickname: search.nickname,
                 search_history: search.search,
-                created_at: search.created_at.slice(0, 10)
+                created_at: search.created_at
             }));
-            setRows(formattedRows);
+            setSearchDataAll(formattedRows);
         };
-        getUsers();
-    }, [page]);
+        getAllInquiry();
+    }, []);
+
     return (
         <Wrapper>
             <S.AdminContainer>

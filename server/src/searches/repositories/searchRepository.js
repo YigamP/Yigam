@@ -21,6 +21,14 @@ class SearchHistoryRepository {
             throw new Error(err);
         }
     }
+
+    static async getAllSearchHistory() {
+        try {
+            return await prisma.search_history.findMany();
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { SearchHistoryRepository };

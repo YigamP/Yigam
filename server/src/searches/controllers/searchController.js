@@ -15,6 +15,15 @@ class SearchController {
             throw new Error(err);
         }
     }
+
+    static async getAllSearchHistory(req, res) {
+        try {
+            const searches = await SearchHistoryService.getAllSearchHistory();
+            res.json(searches);
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { SearchController };

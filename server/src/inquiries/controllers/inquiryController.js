@@ -12,6 +12,15 @@ class InquiryController {
             throw new Error(err);
         }
     }
+
+    static async getAllInquires(req, res) {
+        try {
+            const inquires = await InquiryService.getAllInquiries();
+            res.json(inquires);
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryController };

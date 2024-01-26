@@ -15,6 +15,16 @@ class SearchHistoryService {
             throw new Error(err);
         }
     }
+
+    static async getAllSearchHistory() {
+        try {
+            const searches = await SearchHistoryRepository.getAllSearchHistory();
+
+            return searches;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { SearchHistoryService };

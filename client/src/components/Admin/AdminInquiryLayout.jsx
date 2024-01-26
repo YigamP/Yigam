@@ -10,7 +10,7 @@ import { Pagination, Stack } from '@mui/material';
 
 const AdminInquiryLayout = () => {
     const [inquiryData, setInquiryData] = useState([]);
-    const [rows, setRows] = useState([]);
+    const [inquiryAll, setInquiryAll] = useState([]);
     const [page, setPage] = useState(1);
 
     const handleChangePage = (_e, page) => {
@@ -19,16 +19,16 @@ const AdminInquiryLayout = () => {
     };
 
     const handleDownload = () => {
-        if (!window.confirm('문의내역이 전체 다운로드 됩니다.')) {
+        if (!window.confirm('문의내역을 전체 다운로드 합니다.')) {
             return;
         }
         const csvRows = [
-            ['No.', '유저 이메일', '유저 닉네임', '검색기록', '검색시간'], // headers
-            ...rows.map(row => [
+            ['No.', '유저 이메일', '문의내용', '상태', '문의시간'], // headers
+            ...inquiryAll.map(row => [
                 row.id,
                 row.user_email,
-                row.nickname,
-                row.search_history,
+                row.content,
+                row.status,
                 row.created_at
             ]) // data
         ];
@@ -50,12 +50,27 @@ const AdminInquiryLayout = () => {
     };
 
     useEffect(() => {
-        const getUsers = async () => {
-            const { data } = await API.get(`/inquires?page=${page}`);
+        const getInquiries = async () => {
+            const { data } = await API.get(`/inquiries?page=${page}`);
             setInquiryData(data);
         };
-        getUsers();
+        getInquiries();
     }, [page]);
+
+    useEffect(() => {
+        const getAllInquiry = async () => {
+            const { data } = await API.get('/inquiries/all');
+            const formattedRows = data.map(inquiry => ({
+                id: inquiry.id,
+                user_email: inquiry.user_email,
+                content: inquiry.inquiry_content,
+                status: inquiry.status === 'wait' ? '대기' : '완료',
+                created_at: inquiry.created_at
+            }));
+            setInquiryAll(formattedRows);
+        };
+        getAllInquiry();
+    }, []);
 
     return (
         <Wrapper>
