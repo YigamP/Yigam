@@ -7,6 +7,7 @@ import JoinPage from '../pages/Join';
 import AdminPage from '../pages/Admin';
 import AdminSearchHistoryPage from '../pages/AdminSearchHistory';
 import AdminInquiryPage from '../pages/AdminInquiry';
+import AdminDataPage from '../pages/AdminData';
 
 const Routers = () => {
     return (
@@ -19,6 +20,7 @@ const Routers = () => {
                     <Route path="/join" element={<JoinPage />} />
                     <Route path="/admin/inquiry" element={<AdminInquiryPage />} />
                     <Route path="/admin/search_history" element={<AdminSearchHistoryPage />} />
+                    <Route path="/admin/data" element={<AdminDataPage />} />
                     <Route path="/admin" element={<AdminPage />} />
                 </Routes>
             </Layout>

@@ -2,7 +2,13 @@ import { Container, Wrapper } from '../../commons/styles/style';
 import TextInput from '../commons/inputs/TextInput';
 import SubTitle from '../commons/titles/SubTitle';
 import DefaultBtn from '../commons/buttons/DefaultBtn';
-import { BtnContainer, InputContainer, LinkText, LoginContainer } from '../Login/style';
+import {
+    BtnContainer,
+    InputContainer,
+    LinkText,
+    LoginContainer,
+    TitleContainer
+} from '../Login/style';
 import { Link } from 'react-router-dom';
 
 const JoinLayout = () => {
@@ -10,7 +16,9 @@ const JoinLayout = () => {
         <Wrapper>
             <Container>
                 <LoginContainer>
-                    <SubTitle title="회원가입" />
+                    <TitleContainer>
+                        <SubTitle title="회원가입" />
+                    </TitleContainer>
                     <InputContainer>
                         <TextInput title="이메일" helperText="이메일을 입력해주세요." />
                     </InputContainer>

@@ -16,7 +16,16 @@ const Header = () => {
                             <Link to="/">QA 검색</Link>
                         </li>
                         <li>
-                            <Link to="/admin">관리자</Link>
+                            <Link to="/admin">유저관리</Link>
+                        </li>
+                        <li>
+                            <Link to="/admin/inquiry">문의내역</Link>
+                        </li>
+                        <li>
+                            <Link to="/admin/search_history">검색내역</Link>
+                        </li>
+                        <li>
+                            <Link to="/admin/data">질의 데이터 관리</Link>
                         </li>
                         <li>
                             <Link to="/login">로그인</Link>
