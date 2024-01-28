@@ -7,11 +7,15 @@ import * as API from '../../api/index.js';
 import { useEffect, useState } from 'react';
 import { scrollToTop } from '../../commons/util';
 import { Pagination, Stack } from '@mui/material';
+import InquiryList from './InquiryList.jsx';
+import { useRecoilState } from 'recoil';
+import { refetchState } from '../../atoms/index.js';
 
 const AdminInquiryLayout = () => {
     const [inquiryData, setInquiryData] = useState([]);
     const [inquiryAll, setInquiryAll] = useState([]);
     const [page, setPage] = useState(1);
+    const [refetch, setRefetch] = useRecoilState(refetchState);
 
     const handleChangePage = (_e, page) => {
         scrollToTop();
@@ -55,7 +59,7 @@ const AdminInquiryLayout = () => {
             setInquiryData(data);
         };
         getInquiries();
-    }, [page]);
+    }, [page, refetch]);
 
     useEffect(() => {
         const getAllInquiry = async () => {
@@ -95,36 +99,13 @@ const AdminInquiryLayout = () => {
                     <S.SmallBox></S.SmallBox>
                 </S.ListHead>
                 {inquiryData?.inquires?.map((inquiry, index) => (
-                    <S.ListOfLists key={index}>
-                        <S.SmallBox style={{ textAlign: 'center' }}>
-                            {index + 1 + (page - 1) * 10}
-                        </S.SmallBox>
-                        <S.SmallBox style={{ textAlign: 'center' }}>
-                            {inquiry?.created_at.slice(0, 10)}
-                        </S.SmallBox>
-                        <S.ReportProfile>
-                            <S.MediumBox>{inquiry?.user_email}</S.MediumBox>
-                        </S.ReportProfile>
-                        <S.LargeBox>
-                            <S.ScrollContainer>
-                                <S.ScrollText>{inquiry?.inquiry_content}</S.ScrollText>
-                            </S.ScrollContainer>
-                        </S.LargeBox>
-
-                        <S.SmallBox>
-                            <S.IdHandleSelect
-                                onChange={() => {}}
-                                disabled={inquiry?.status === 'complete'}
-                                value={inquiry?.status === 'wait' ? 'wait' : 'complete'}
-                            >
-                                <option value="wait">대기</option>
-                                <option value="complete">완료</option>
-                            </S.IdHandleSelect>
-                        </S.SmallBox>
-                        <S.SmallBox>
-                            <S.Button>삭제</S.Button>
-                        </S.SmallBox>
-                    </S.ListOfLists>
+                    <InquiryList
+                        key={inquiry.id}
+                        inquiry={inquiry}
+                        index={index}
+                        page={page}
+                        setRefetch={setRefetch}
+                    />
                 ))}
                 <S.PaginationContainer>
                     <Stack spacing={2}>

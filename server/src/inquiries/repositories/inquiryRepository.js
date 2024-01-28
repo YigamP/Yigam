@@ -22,7 +22,11 @@ class InquiryRepository {
 
     static async getTotalInquiries() {
         try {
-            return await prisma.inquiry.count();
+            return await prisma.inquiry.count({
+                where: {
+                    deleted_at: null
+                }
+            });
         } catch (err) {
             throw new Error(err);
         }
