@@ -29,6 +29,16 @@ class InquiryRepository {
             throw new Error(err);
         }
     }
+
+    static async addInquires({ title }) {
+        try {
+            return await prisma.inquiry.create({
+                title
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryRepository };

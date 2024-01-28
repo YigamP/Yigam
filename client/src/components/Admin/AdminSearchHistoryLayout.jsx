@@ -60,7 +60,6 @@ const AdminSearchHistoryLayout = () => {
     useEffect(() => {
         const getAllInquiry = async () => {
             const { data } = await API.get('/searches/all');
-            console.log(data);
             const formattedRows = data.map(search => ({
                 id: search.id,
                 user_email: search.user_email,

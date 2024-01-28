@@ -25,6 +25,16 @@ class InquiryService {
             throw new Error(err);
         }
     }
+
+    static async reqInquires({ title }) {
+        try {
+            const result = await InquiryRepository.addInquires({ title });
+
+            return result;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryService };

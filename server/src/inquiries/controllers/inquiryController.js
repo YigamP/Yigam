@@ -21,6 +21,16 @@ class InquiryController {
             throw new Error(err);
         }
     }
+
+    static async reqInquires(req, res) {
+        const { title } = req.body;
+        try {
+            const result = await InquiryService.reqInquires({ title });
+            res.json(result);
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryController };
