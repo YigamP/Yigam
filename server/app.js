@@ -4,16 +4,26 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import { UserRouter } from './src/users/routers/userRouter.js';
 import { InquiryRouter } from './src/inquiries/routers/inquiryRouter.js';
+import { SearchRouter } from './src/searches/routers/searchRouter.js';
+import cors from 'cors';
+import dotenv from 'dotenv';
 
 const app = express();
 
+dotenv.config();
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(
+    cors({
+        origin: true
+    })
+);
 
 app.use('/users', UserRouter);
-app.use('/inquires', InquiryRouter);
+app.use('/inquiries', InquiryRouter);
+app.use('/searches', SearchRouter);
 
 app.use((req, res, next) => {
     next(createError(404));

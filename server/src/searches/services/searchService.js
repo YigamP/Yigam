@@ -1,15 +1,30 @@
-import { UserRepository } from '../repositories/userRepository.js';
+import { SearchHistoryRepository } from '../repositories/searchRepository.js';
 
-class UserService {
-    static async getUserService() {
+class SearchHistoryService {
+    static async getSearchHistory({ page, pageSize }) {
+        const skip = (page - 1) * pageSize;
         try {
-            const users = await UserRepository.getUsers();
+            const searches = await SearchHistoryRepository.getSearchHistory({ pageSize, skip });
 
-            return users;
+            const totalSearchHistoryCount = await SearchHistoryRepository.getTotalSearchHistories();
+
+            const totalPages = Math.ceil(totalSearchHistoryCount / pageSize);
+
+            return { searches, totalPages };
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async getAllSearchHistory() {
+        try {
+            const searches = await SearchHistoryRepository.getAllSearchHistory();
+
+            return searches;
         } catch (err) {
             throw new Error(err);
         }
     }
 }
 
-export { UserService };
+export { SearchHistoryService };

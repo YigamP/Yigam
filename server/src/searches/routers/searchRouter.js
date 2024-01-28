@@ -1,8 +1,9 @@
 import { Router } from 'express';
-import { UserController } from '../controllers/userController.js';
+import { SearchController } from '../controllers/searchController.js';
 
-const UserRouter = Router();
+const SearchRouter = Router();
 
-UserRouter.get('/', UserController.getUserController);
+SearchRouter.get('/', SearchController.getSearchHistory);
+SearchRouter.get('/all', SearchController.getAllSearchHistory);
 
-export { UserRouter };
+export { SearchRouter };

@@ -2,14 +2,36 @@ import { PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
-class UserRepository {
-    static async getUsers() {
+class SearchHistoryRepository {
+    static async getSearchHistory({ pageSize, skip }) {
         try {
-            return await prisma.user.findMany();
+            return await prisma.search_history.findMany({
+                orderBy: {
+                    created_at: 'desc'
+                },
+                skip,
+                take: pageSize
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async getTotalSearchHistories() {
+        try {
+            return await prisma.search_history.count();
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async getAllSearchHistory() {
+        try {
+            return await prisma.search_history.findMany();
         } catch (err) {
             throw new Error(err);
         }
     }
 }
 
-export { UserRepository };
+export { SearchHistoryRepository };
