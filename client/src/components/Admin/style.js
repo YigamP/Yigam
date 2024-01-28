@@ -7,20 +7,28 @@ export const AdminContainer = styled(Container)`
 
 export const ListOfLists = styled.div`
     width: 100%;
-    padding-left: 2%;
     display: flex;
     align-items: center;
     font-size: 16px;
     border-bottom: 1px solid #e7e7e7;
-    padding: 2.3rem 0;
-
+    padding: 20px 0;
     p {
         font-size: 16px;
     }
 
-    &:hover {
+    &:hali {
         background-color: #d6d5d5;
     }
+`;
+
+export const ScrollText = styled.p`
+    width: 100%;
+    font-weight: 400;
+    color: #111;
+    display: flex;
+    align-items: center;
+    line-height: 1.3;
+    word-break: break-all;
 `;
 
 export const ReportProfile = styled.div`
@@ -45,6 +53,11 @@ export const boxContainer = styled.div`
 
 export const LargeBox = styled.div`
     width: 30%;
+`;
+
+export const BigLargeBox = styled.div`
+    width: 50%;
+    padding: 20px 0;
 `;
 
 export const IdHandleSelect = styled.select`
@@ -95,4 +108,52 @@ export const ListHead = styled.div`
     font-size: 15px;
     padding: 20px 0;
     border-bottom: 1px solid #ddd;
+`;
+
+export const ScrollContainer = styled.div`
+    width: 100%;
+    max-height: 80px;
+    overflow-y: auto;
+`;
+
+export const SecondTitleContainer = styled.div`
+    margin: 20px 0;
+`;
+
+export const DataBtnBox = styled.div`
+    display: flex;
+    gap: 15px;
+    margin-top: 40px;
+`;
+
+export const DataBtn = styled.button`
+    width: 150px;
+    padding: 10px;
+    background-color: ${({ color }) => color};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    border: ${({ color }) => (color === '#fff' ? '1px solid #111' : 'none')};
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    span {
+        font-size: 16px;
+        font-weight: 500;
+        color: ${({ color }) => (color === '#fff' ? '#111' : '#fff')};
+    }
+`;
+
+export const BetweenBox = styled.div`
+    display: flex;
+    gap: 20px;
+`;
+
+export const PaginationContainer = styled.div`
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 30px;
 `;
