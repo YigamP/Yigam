@@ -31,7 +31,11 @@ class UserRepository {
 
     static async getTotalUsers() {
         try {
-            return await prisma.user.count();
+            return await prisma.user.count({
+                where: {
+                    deleted_at: null
+                }
+            });
         } catch (err) {
             throw new Error(err);
         }

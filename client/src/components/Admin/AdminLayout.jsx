@@ -7,10 +7,14 @@ import { useEffect, useState } from 'react';
 import Pagination from '@mui/material/Pagination';
 import Stack from '@mui/material/Stack';
 import { scrollToTop } from '../../commons/util/index.js';
+import UserList from './UserList.jsx';
+import { useRecoilState } from 'recoil';
+import { refetchState } from '../../atoms/index.js';
 
 const AdminLayout = () => {
     const [userData, setUserData] = useState([]);
     const [page, setPage] = useState(1);
+    const [refetch, setRefetch] = useRecoilState(refetchState);
 
     const handleChangePage = (_e, page) => {
         scrollToTop();
@@ -23,7 +27,7 @@ const AdminLayout = () => {
             setUserData(data);
         };
         getUsers();
-    }, [page]);
+    }, [page, refetch]);
 
     return (
         <Wrapper>
@@ -41,34 +45,13 @@ const AdminLayout = () => {
                     <S.SmallBox></S.SmallBox>
                 </S.ListHead>
                 {userData?.users?.map((user, index) => (
-                    <S.ListOfLists key={index}>
-                        <S.SmallBox style={{ textAlign: 'center' }}>
-                            {index + 1 + (page - 1) * 10}
-                        </S.SmallBox>
-                        <S.ReportProfile>
-                            <S.MediumBox>{user?.email}</S.MediumBox>
-                        </S.ReportProfile>
-                        <S.boxContainer>{user?.nickname}</S.boxContainer>
-                        <S.boxContainer style={{ textAlign: 'center' }}>
-                            {user?.type === 'normal'
-                                ? '일반'
-                                : user?.type === 'google'
-                                  ? '구글'
-                                  : '카카오'}
-                        </S.boxContainer>
-                        <S.SmallBox>
-                            <S.IdHandleSelect
-                                onChange={() => {}}
-                                value={user?.role === 'user' ? 'user' : 'admin'}
-                            >
-                                <option value="user">유저</option>
-                                <option value="admin">관리자</option>
-                            </S.IdHandleSelect>
-                        </S.SmallBox>
-                        <S.SmallBox>
-                            <S.Button>탈퇴</S.Button>
-                        </S.SmallBox>
-                    </S.ListOfLists>
+                    <UserList
+                        key={user?.id}
+                        user={user}
+                        index={index}
+                        page={page}
+                        setRefetch={setRefetch}
+                    />
                 ))}
                 <S.PaginationContainer>
                     <Stack spacing={2}>
