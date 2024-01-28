@@ -26,6 +26,20 @@ class UserController {
             throw new Error(err);
         }
     }
+
+    static async loginUser(req, res) {
+        const { email, password } = req.body;
+
+        try {
+            const result = await UserService.loginUser({ email, password });
+            if (result.error) {
+                return res.status(401).json({ error: result.error });
+            }
+            return res.status(201).json({ token: result });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { UserController };
