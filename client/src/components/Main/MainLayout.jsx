@@ -10,6 +10,8 @@ import TableHead from '@mui/material/TableHead';
 import TablePagination from '@mui/material/TablePagination';
 import TableRow from '@mui/material/TableRow';
 import { useState } from 'react';
+import * as API from '../../api/index';
+import Swal from 'sweetalert2';
 
 const columns = [
     { id: 'number', label: '번호', minWidth: 70 },
@@ -29,6 +31,31 @@ const columns = [
 const MainLayout = () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const [inquiry, setInquiry] = useState('');
+
+    const handleChangeInquiry = e => {
+        setInquiry(e.target.value);
+    };
+
+    const handleReqInquiry = async () => {
+        try {
+            await API.post('/inquiries', { content: inquiry });
+            Swal.fire({
+                title: '알림',
+                text: '문의가 정상적으로 등록 되었습니다.',
+                button: 'OK'
+            });
+            setInquiry('');
+        } catch (err) {
+            Swal.fire({
+                title: '알림',
+                text: '문의실패, 관리자에게 문의해주세요.',
+                icon: 'error',
+                button: 'OK'
+            });
+        }
+    };
 
     const handleChangePage = (event, newPage) => {
         setPage(newPage);
@@ -89,8 +116,12 @@ const MainLayout = () => {
                     <S.Input
                         type="text"
                         placeholder="원하는 답변을 찾지 못하셨나요? 관리자에게 문의주시면, 빠른 시일 내에 이메일 답변 전달 드리겠습니다."
+                        value={inquiry}
+                        onChange={handleChangeInquiry}
                     />
-                    <S.Button color="#c51162 ">문의하기</S.Button>
+                    <S.Button color="#c51162" onClick={handleReqInquiry}>
+                        문의하기
+                    </S.Button>
                 </S.InnputBox>
 
                 <S.LoadingContainer>
