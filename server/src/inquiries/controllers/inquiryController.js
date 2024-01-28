@@ -34,6 +34,30 @@ class InquiryController {
             throw new Error(err);
         }
     }
+
+    static async changeStatus(req, res) {
+        const { inquiryId, status } = req.body;
+
+        try {
+            await InquiryService.changeStatus({ inquiryId, status });
+
+            return res.status(200).json({ message: '문의 상태가 변경 되었습니다.' });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async deleteInquiry(req, res) {
+        const { inquiryId } = req.body;
+
+        try {
+            await InquiryService.deleteInquiry({ inquiryId });
+
+            return res.status(200).json({ message: '해당 문의내역이 삭제 되었습니다.' });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryController };

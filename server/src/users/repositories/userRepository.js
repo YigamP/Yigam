@@ -6,6 +6,9 @@ class UserRepository {
     static async getUsers({ pageSize, skip }) {
         try {
             return await prisma.user.findMany({
+                where: {
+                    deleted_at: null
+                },
                 skip,
                 take: pageSize
             });
@@ -55,6 +58,36 @@ class UserRepository {
             return await prisma.user.findUnique({
                 where: {
                     email
+                }
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async updateUserRole({ userId, role }) {
+        try {
+            return await prisma.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    role: role
+                }
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async deleteUser({ userId }) {
+        try {
+            return await prisma.user.update({
+                where: {
+                    id: userId
+                },
+                data: {
+                    deleted_at: new Date()
                 }
             });
         } catch (err) {

@@ -35,6 +35,22 @@ class InquiryService {
             throw new Error(err);
         }
     }
+
+    static async changeStatus({ inquiryId, status }) {
+        try {
+            await InquiryRepository.changeStatus({ inquiryId, status });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async deleteInquiry({ inquiryId }) {
+        try {
+            await InquiryRepository.deleteInquiry({ inquiryId });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { InquiryService };

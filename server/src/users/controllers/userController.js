@@ -51,6 +51,30 @@ class UserController {
             throw new Error(err);
         }
     }
+
+    static async changeUser(req, res) {
+        const { userId, role } = req.body;
+
+        try {
+            await UserService.changeUser({ userId, role });
+
+            return res.status(200).json({ message: '유저 권한을 변경 하였습니다.' });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async deleteUser(req, res) {
+        const { userId } = req.body;
+
+        try {
+            await UserService.deleteUser({ userId });
+
+            return res.status(200).json({ message: '해당 유저가 탈퇴 되었습니다.' });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { UserController };

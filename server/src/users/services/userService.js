@@ -74,6 +74,22 @@ class UserService {
             throw new Error(err);
         }
     }
+
+    static async changeUser({ userId, role }) {
+        try {
+            await UserRepository.updateUserRole({ userId, role });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async deleteUser({ userId }) {
+        try {
+            await UserRepository.deleteUser({ userId });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { UserService };

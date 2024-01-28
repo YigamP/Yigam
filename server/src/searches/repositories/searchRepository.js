@@ -6,6 +6,9 @@ class SearchHistoryRepository {
     static async getSearchHistory({ pageSize, skip }) {
         try {
             return await prisma.search_history.findMany({
+                orderBy: {
+                    created_at: 'desc'
+                },
                 skip,
                 take: pageSize
             });

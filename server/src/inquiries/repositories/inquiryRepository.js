@@ -6,6 +6,12 @@ class InquiryRepository {
     static async getInquiries({ pageSize, skip }) {
         try {
             return await prisma.inquiry.findMany({
+                where: {
+                    deleted_at: null
+                },
+                orderBy: {
+                    created_at: 'desc'
+                },
                 skip,
                 take: pageSize
             });
@@ -38,6 +44,36 @@ class InquiryRepository {
                     inquiry_content: content,
                     status: 'wait',
                     created_at: new Date()
+                }
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async changeStatus({ inquiryId, status }) {
+        try {
+            return await prisma.inquiry.update({
+                where: {
+                    id: inquiryId
+                },
+                data: {
+                    status: status
+                }
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
+    static async deleteInquiry({ inquiryId }) {
+        try {
+            return await prisma.inquiry.update({
+                where: {
+                    id: inquiryId
+                },
+                data: {
+                    deleted_at: new Date()
                 }
             });
         } catch (err) {
