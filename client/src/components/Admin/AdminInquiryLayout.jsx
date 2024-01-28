@@ -23,13 +23,13 @@ const AdminInquiryLayout = () => {
             return;
         }
         const csvRows = [
-            ['No.', '유저 이메일', '문의내용', '상태', '문의시간'], // headers
+            ['No.', '문의시간', '유저 이메일', '문의내용', '상태'], // headers
             ...inquiryAll.map(row => [
                 row.id,
+                row.created_at,
                 row.user_email,
                 row.content,
-                row.status,
-                row.created_at
+                row.status
             ]) // data
         ];
 
@@ -87,9 +87,10 @@ const AdminInquiryLayout = () => {
                 </S.SecondTitleContainer>
                 <S.ListHead>
                     <S.SmallBox style={{ textAlign: 'center' }}>No.</S.SmallBox>
+                    <S.SmallBox style={{ textAlign: 'center' }}>문의날짜</S.SmallBox>
                     <S.LargeBox style={{ paddingLeft: '10px' }}>문의자 이메일</S.LargeBox>
-                    <S.boxContainer>문의내용</S.boxContainer>
-                    <S.boxContainer style={{ textAlign: 'center' }}>문의날짜</S.boxContainer>
+                    <S.LargeBox>문의내용</S.LargeBox>
+
                     <S.SmallBox style={{ textAlign: 'center' }}>상태</S.SmallBox>
                     <S.SmallBox></S.SmallBox>
                 </S.ListHead>
@@ -98,13 +99,18 @@ const AdminInquiryLayout = () => {
                         <S.SmallBox style={{ textAlign: 'center' }}>
                             {index + 1 + (page - 1) * 10}
                         </S.SmallBox>
+                        <S.SmallBox style={{ textAlign: 'center' }}>
+                            {inquiry?.created_at.slice(0, 10)}
+                        </S.SmallBox>
                         <S.ReportProfile>
                             <S.MediumBox>{inquiry?.user_email}</S.MediumBox>
                         </S.ReportProfile>
-                        <S.boxContainer>{inquiry?.inquiry_content}</S.boxContainer>
-                        <S.boxContainer style={{ textAlign: 'center' }}>
-                            {inquiry?.created_at.slice(0, 10)}
-                        </S.boxContainer>
+                        <S.LargeBox>
+                            <S.ScrollContainer>
+                                <S.ScrollText>{inquiry?.inquiry_content}</S.ScrollText>
+                            </S.ScrollContainer>
+                        </S.LargeBox>
+
                         <S.SmallBox>
                             <S.IdHandleSelect
                                 onChange={() => {}}

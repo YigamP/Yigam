@@ -21,7 +21,7 @@ export const ListOfLists = styled.div`
     }
 `;
 
-export const ScrollText = styled.pre`
+export const ScrollText = styled.p`
     width: 100%;
     font-weight: 400;
     color: #111;
@@ -57,8 +57,7 @@ export const LargeBox = styled.div`
 
 export const BigLargeBox = styled.div`
     width: 50%;
-    height: 100px;
-    padding: 10px 0;
+    padding: 20px 0;
 `;
 
 export const IdHandleSelect = styled.select`
@@ -113,10 +112,8 @@ export const ListHead = styled.div`
 
 export const ScrollContainer = styled.div`
     width: 100%;
-    height: 80px;
+    max-height: 80px;
     overflow-y: auto;
-    display: flex;
-    align-items: center;
 `;
 
 export const SecondTitleContainer = styled.div`

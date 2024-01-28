@@ -23,13 +23,13 @@ const AdminSearchHistoryLayout = () => {
             return;
         }
         const csvRows = [
-            ['No.', '유저 이메일', '유저 닉네임', '검색기록', '검색시간'], // headers
+            ['No.', '검색시간', '유저 이메일', '유저 닉네임', '검색기록'], // headers
             ...searchDataAll.map(row => [
                 row.id,
+                row.created_at,
                 row.user_email,
                 row.nickname,
-                row.search_history,
-                row.created_at
+                row.search_history
             ]) // data
         ];
 
@@ -87,17 +87,18 @@ const AdminSearchHistoryLayout = () => {
                 </S.SecondTitleContainer>
                 <S.ListHead style={{ padding: '0' }}>
                     <S.SmallBox style={{ textAlign: 'center' }}>No.</S.SmallBox>
+                    <S.SmallBox style={{ textAlign: 'center' }}>검색날짜</S.SmallBox>
                     <S.SmallBox>닉네임</S.SmallBox>
                     <S.boxContainer>이메일</S.boxContainer>
-                    <S.BigLargeBox>
-                        <S.ScrollContainer>검색내용</S.ScrollContainer>
-                    </S.BigLargeBox>
-                    <S.SmallBox style={{ textAlign: 'center' }}>검색시간</S.SmallBox>
+                    <S.BigLargeBox>검색내용</S.BigLargeBox>
                 </S.ListHead>
                 {searchData?.searches?.map((search, index) => (
                     <S.ListOfLists style={{ padding: '0' }} key={index}>
                         <S.SmallBox style={{ textAlign: 'center' }}>
                             {index + 1 + (page - 1) * 10}
+                        </S.SmallBox>
+                        <S.SmallBox style={{ textAlign: 'center' }}>
+                            {search?.created_at.slice(0, 10)}
                         </S.SmallBox>
                         <S.SmallBox>{search?.nickname}</S.SmallBox>
                         <S.boxContainer>{search?.user_email}</S.boxContainer>
@@ -106,9 +107,6 @@ const AdminSearchHistoryLayout = () => {
                                 <S.ScrollText>{search?.search}</S.ScrollText>
                             </S.ScrollContainer>
                         </S.BigLargeBox>
-                        <S.SmallBox style={{ textAlign: 'center' }}>
-                            {search?.created_at.slice(0, 10)}
-                        </S.SmallBox>
                     </S.ListOfLists>
                 ))}
                 <S.PaginationContainer>
