@@ -14,6 +14,18 @@ class UserRepository {
         }
     }
 
+    static async getUser({ email }) {
+        try {
+            return await prisma.user.findUnique({
+                where: {
+                    email
+                }
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
     static async getTotalUsers() {
         try {
             return await prisma.user.count();

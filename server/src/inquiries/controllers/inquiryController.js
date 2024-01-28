@@ -23,10 +23,13 @@ class InquiryController {
     }
 
     static async reqInquires(req, res) {
-        const { title } = req.body;
+        const { content } = req.body;
+        const email = req.email;
         try {
-            const result = await InquiryService.reqInquires({ title });
-            res.json(result);
+            const result = await InquiryService.reqInquires({ content, email });
+            if (result) {
+                res.json({ message: '문의가 성공적으로 접수 되었습니다.' });
+            }
         } catch (err) {
             throw new Error(err);
         }

@@ -13,6 +13,17 @@ class UserController {
         }
     }
 
+    static async getMyInfoController(req, res) {
+        const email = req.email;
+
+        try {
+            const user = await UserService.getUser({ email });
+            res.json({ user });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
+
     static async createUserController(req, res) {
         const { email, password, nickname } = req.body;
 
@@ -35,7 +46,7 @@ class UserController {
             if (result.error) {
                 return res.status(401).json({ error: result.error });
             }
-            return res.status(201).json({ token: result });
+            return res.status(201).json({ token: result.token, user: result.user });
         } catch (err) {
             throw new Error(err);
         }

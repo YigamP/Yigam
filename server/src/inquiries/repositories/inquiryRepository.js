@@ -30,10 +30,15 @@ class InquiryRepository {
         }
     }
 
-    static async addInquires({ title }) {
+    static async addInquires({ content, email }) {
         try {
             return await prisma.inquiry.create({
-                title
+                data: {
+                    user_email: email,
+                    inquiry_content: content,
+                    status: 'wait',
+                    created_at: new Date()
+                }
             });
         } catch (err) {
             throw new Error(err);

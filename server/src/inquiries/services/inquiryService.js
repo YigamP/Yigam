@@ -26,9 +26,9 @@ class InquiryService {
         }
     }
 
-    static async reqInquires({ title }) {
+    static async reqInquires({ content, email }) {
         try {
-            const result = await InquiryRepository.addInquires({ title });
+            const result = await InquiryRepository.addInquires({ content, email });
 
             return result;
         } catch (err) {

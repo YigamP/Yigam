@@ -1,9 +1,7 @@
+/* eslint-disable no-undef */
 import { UserRepository } from '../repositories/userRepository.js';
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
 import jwt from 'jsonwebtoken';
-
-const secretKey = crypto.randomBytes(32).toString('hex');
 
 class UserService {
     static async getUsers({ page, pageSize }) {
@@ -20,6 +18,15 @@ class UserService {
             throw new Error(err);
         }
     }
+    static async getUser({ email }) {
+        try {
+            const user = await UserRepository.getUser({ email });
+
+            return user;
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 
     static async createUser({ email, password, nickname }) {
         const salt = bcrypt.genSaltSync(10);
@@ -32,7 +39,6 @@ class UserService {
                 nickname
             };
             const validation = await UserRepository.findUser({ email });
-            console.log(validation);
             if (validation) {
                 return { error: '이미 존재하는 이메일 입니다.' };
             } else {
@@ -45,6 +51,7 @@ class UserService {
     }
 
     static async loginUser({ email, password }) {
+        const jwt_key = process.env.JWT_KEY;
         try {
             const user = await UserRepository.findUser({ email });
             if (!user) {
@@ -55,10 +62,10 @@ class UserService {
                 if (isPasswordCorrect) {
                     const token = jwt.sign(
                         { userEmail: user.email, userNickname: user.nickname },
-                        secretKey,
+                        jwt_key,
                         { expiresIn: '1h' }
                     );
-                    return token;
+                    return { token, user };
                 } else {
                     return { error: '비밀번호가 일치하지 않습니다.' };
                 }
