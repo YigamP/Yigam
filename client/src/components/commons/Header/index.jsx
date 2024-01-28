@@ -21,7 +21,7 @@ const Header = () => {
         localStorage.setItem('token', '');
         setUserInfo('');
 
-        alert('로그아웃');
+        window.location.reload();
     };
     return (
         <S.HeaderBox>
