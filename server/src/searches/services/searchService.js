@@ -25,6 +25,14 @@ class SearchHistoryService {
             throw new Error(err);
         }
     }
+
+    static async getSearchAiData({ content }) {
+        try {
+            await SearchHistoryRepository.addSearchData({ content });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { SearchHistoryService };

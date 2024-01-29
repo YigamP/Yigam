@@ -54,8 +54,8 @@ def get_data(input_query):
     
     import glob 
     print("!!!====== files   ", glob.glob("./*.xlsx"))
-    filename = '답변내역 합본.xlsx'
-    filename = './답변내역 합본.xlsx'
+    filename = 'answer.xlsx'
+    filename = 'answer.xlsx'
     excel_data = read_excel_to_list_of_lists(filename)
 
 

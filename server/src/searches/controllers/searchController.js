@@ -24,6 +24,17 @@ class SearchController {
             throw new Error(err);
         }
     }
+
+    static async searchAi(req, res) {
+        const { content } = req.body;
+        try {
+            const searches = await SearchHistoryService.getSearchAiData({ content });
+
+            res.json(searches);
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { SearchController };
