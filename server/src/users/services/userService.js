@@ -63,7 +63,7 @@ class UserService {
                     const token = jwt.sign(
                         { userEmail: user.email, userNickname: user.nickname },
                         jwt_key,
-                        { expiresIn: '1h' }
+                        { expiresIn: '24h' }
                     );
                     return { token, user };
                 } else {

@@ -18,8 +18,7 @@ const Header = () => {
     }, []);
 
     const handleLogout = () => {
-        localStorage.setItem('token', '');
-        setUserInfo('');
+        sessionStorage.removeItem('token');
 
         window.location.reload();
     };
@@ -33,7 +32,7 @@ const Header = () => {
                 </S.LogoContainer>
                 <S.Navigation>
                     <ul>
-                        {userInfo ? (
+                        {sessionStorage.getItem('token') ? (
                             <>
                                 <li>
                                     <Link to="/">QA 검색</Link>

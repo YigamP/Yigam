@@ -32,7 +32,7 @@ const LoginLayout = () => {
         if (email && password) {
             try {
                 const result = await API.post('/users/login', { email, password });
-                localStorage.setItem('token', result.data.token);
+                sessionStorage.setItem('token', result.data.token);
                 setUserInfo(result.data.user);
                 Swal.fire({
                     title: '알림',
