@@ -27,9 +27,9 @@ class SearchController {
 
     static async searchAi(req, res) {
         const { content } = req.body;
+        const email = req.email;
         try {
-            const searches = await SearchHistoryService.getSearchAiData({ content });
-
+            const searches = await SearchHistoryService.getSearchAiData({ content, email });
             res.json(searches);
         } catch (err) {
             throw new Error(err);

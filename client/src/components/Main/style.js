@@ -13,8 +13,6 @@ export const MainContainer = styled(Container)`
         overflow-y: auto;
         div {
             width: 100%;
-            display: flex;
-            align-items: center;
             height: 50px;
         }
     }

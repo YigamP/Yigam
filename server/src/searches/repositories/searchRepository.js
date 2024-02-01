@@ -33,11 +33,14 @@ class SearchHistoryRepository {
         }
     }
 
-    static async addSearchData({ content }) {
+    static async addSearchData({ content, email, nickname }) {
         try {
             return await prisma.search_history.create({
                 data: {
-                    inquiry_content: content
+                    user_email: email,
+                    nickname,
+                    search: content,
+                    created_at: new Date()
                 }
             });
         } catch (err) {
