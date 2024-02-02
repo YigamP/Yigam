@@ -1,12 +1,13 @@
 import { Link } from 'react-router-dom';
 import * as S from './style';
 import { useRecoilState } from 'recoil';
-import { userState } from '../../../atoms';
+import { refetchState, userState } from '../../../atoms';
 import { useEffect } from 'react';
 import * as API from '../../../api/index';
 
 const Header = () => {
     const [userInfo, setUserInfo] = useRecoilState(userState);
+    const [refetch, setRefetch] = useRecoilState(refetchState);
 
     useEffect(() => {
         const getUser = async () => {
@@ -15,11 +16,25 @@ const Header = () => {
         };
 
         getUser();
+    }, [refetch]);
+
+    useEffect(() => {
+        const cookieToken = document.cookie
+            .split(';')
+            .map(cookie => cookie.trim())
+            .find(cookie => cookie.startsWith('token='));
+
+        if (cookieToken) {
+            const tokenValue = cookieToken.split('=')[1];
+
+            sessionStorage.setItem('token', tokenValue);
+            setRefetch(prev => prev + 1);
+        }
     }, []);
 
     const handleLogout = () => {
         sessionStorage.removeItem('token');
-
+        document.cookie = 'token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
         window.location.reload();
     };
     return (

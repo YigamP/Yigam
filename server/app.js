@@ -55,7 +55,7 @@ passport.use(
             try {
                 const exUser = await prisma.user.findUnique({
                     where: {
-                        email: profile._json.kakao_account.email
+                        email: profile._json.email
                     }
                 });
 
@@ -75,21 +75,21 @@ passport.use(
                     // 새로운 사용자일 경우
                     await prisma.user.create({
                         data: {
-                            email: profile._json.kakao_account.email,
-                            nickName: profile.displayName
+                            email: profile._json.email,
+                            nickname: profile._json.name,
+                            password: String(Math.floor(100000 + Math.random() * 200000))
                         }
                     });
 
                     const token = jwt.sign(
                         {
-                            userEmail: profile._json.kakao_account.email,
-                            userNickname: profile.displayName
+                            userEmail: profile._json.email,
+                            userNickname: profile._json.name
                         },
                         // eslint-disable-next-line no-undef
                         process.env.JWT_KEY,
                         { expiresIn: '24h' }
                     );
-                    console.log(token);
                     return done(null, token);
                 }
             } catch (error) {
@@ -165,7 +165,9 @@ app.get(
         const token = req.user; // 사용자 토큰 정보 (예: JWT 토큰)
         const query = '?token=' + token;
         res.locals.token = token;
-
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+        res.cookie('token', token, { maxAge: twentyFourHours, httpOnly: false });
+        console.log(token);
         res.redirect(`http://localhost:5173/${query}`);
     }
 );
