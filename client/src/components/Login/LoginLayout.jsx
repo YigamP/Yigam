@@ -61,6 +61,9 @@ const LoginLayout = () => {
     const handleGoogleLogin = () => {
         window.location.assign(`${API.serverUrl}/auth/google`);
     };
+    const handleKakaoLogin = () => {
+        window.location.assign(`${API.serverUrl}/auth/kakao`);
+    };
 
     return (
         <Wrapper>
@@ -88,7 +91,7 @@ const LoginLayout = () => {
                     <S.BtnContainer>
                         <DefaultBtn title="로그인" fill type="button" onClick={handleLogin} />
                     </S.BtnContainer>
-                    <S.KakaoLogin>
+                    <S.KakaoLogin onClick={handleKakaoLogin}>
                         <RiKakaoTalkFill size={25} />
                         <span>카카오톡 로그인</span>
                     </S.KakaoLogin>

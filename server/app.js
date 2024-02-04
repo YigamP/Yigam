@@ -106,11 +106,52 @@ passport.use(
         {
             clientID: KAKAO_CLIENT_ID,
             clientSecret: KAKAO_CLIENT_SECRET,
-            callbackURL: 'http://localhost:5173/kakaoCallback' // 로그인 후 리디렉션될 URL
+            callbackURL: 'http://localhost:8000/auth/kakao/callback' // 로그인 후 리디렉션될 URL
         },
-        (accessToken, refreshToken, profile, done) => {
-            // 사용자 정보를 저장하거나 확인하는 로직을 작성합니다.
-            return done(null, profile);
+        async (accessToken, refreshToken, profile, done) => {
+            console.log(profile);
+            try {
+                const exUser = await prisma.user.findUnique({
+                    where: {
+                        email: String(profile.id)
+                    }
+                });
+                // 기존 사용자일 경우
+                if (exUser) {
+                    const token = jwt.sign(
+                        {
+                            userEmail: exUser.email,
+                            userNickname: exUser.nickname
+                        },
+                        // eslint-disable-next-line no-undef
+                        process.env.JWT_KEY,
+                        { expiresIn: '24h' }
+                    );
+                    return done(null, token);
+                } else {
+                    // 새로운 사용자일 경우
+                    await prisma.user.create({
+                        data: {
+                            email: String(profile.id),
+                            nickname: profile.username,
+                            password: String(Math.floor(100000 + Math.random() * 200000))
+                        }
+                    });
+                    const token = jwt.sign(
+                        {
+                            userEmail: String(profile.id),
+                            userNickname: profile.username
+                        },
+                        // eslint-disable-next-line no-undef
+                        process.env.JWT_KEY,
+                        { expiresIn: '24h' }
+                    );
+                    return done(null, token);
+                }
+            } catch (error) {
+                console.error(error);
+                done(error);
+            }
         }
     )
 );
@@ -163,24 +204,27 @@ app.get(
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
         const token = req.user; // 사용자 토큰 정보 (예: JWT 토큰)
-        const query = '?token=' + token;
         res.locals.token = token;
         const twentyFourHours = 24 * 60 * 60 * 1000;
         res.cookie('token', token, { maxAge: twentyFourHours, httpOnly: false });
-        console.log(token);
-        res.redirect(`http://localhost:5173/${query}`);
+        res.redirect('http://localhost:5173');
     }
 );
 
 // 카카오 로그인 라우트
 app.get('/auth/kakao', passport.authenticate('kakao'));
 
-app.post(
+app.get(
     '/auth/kakao/callback',
     passport.authenticate('kakao', { failureRedirect: '/' }),
     (req, res) => {
-        // 로그인 성공 시 리다이렉트할 경로를 지정합니다.
-        res.redirect('/');
+        console.log(req);
+        const token = req.user; // 사용자 토큰 정보 (예: JWT 토큰)
+        res.locals.token = token;
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+        res.cookie('token', token, { maxAge: twentyFourHours, httpOnly: false });
+        console.log(token);
+        res.redirect('http://localhost:5173');
     }
 );
 
