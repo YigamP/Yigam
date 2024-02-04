@@ -47,11 +47,21 @@ const MainLayout = () => {
 
     const onClickSearch = async () => {
         try {
-            setIsLoading(true);
-            const result = await API.post('/searches', { content: search });
-            if (result) {
-                setIsLoading(false);
-                setAiData(result.data);
+             if (search.length >= 10) {
+                setIsLoading(true);
+                setSearch('');
+                const result = await API.post('/searches', { content: search });
+                if (result) {
+                    setIsLoading(false);
+                    setAiData(result.data);
+                }
+            } else {
+                Swal.fire({
+                    title: '알림',
+                    text: '검색어를 10글자 이상 입력해주세요.',
+                    icon: 'error',
+                    button: 'OK'
+                });
             }
         } catch (err) {
             console.log(err);
@@ -60,6 +70,9 @@ const MainLayout = () => {
 
     const handleReqInquiry = async () => {
         try {
+	if(inquiry){
+
+	
             await API.post('/inquiries', { content: inquiry });
             Swal.fire({
                 title: '알림',
@@ -67,6 +80,14 @@ const MainLayout = () => {
                 button: 'OK'
             });
             setInquiry('');
+	}else{
+           Swal.fire({
+              title: "알림",
+              text: "문의하실 내용을 입력해주세요.",
+	      icon: "error",
+              button: "OK"		   
+	   })
+	}
         } catch (err) {
             Swal.fire({
                 title: '알림',

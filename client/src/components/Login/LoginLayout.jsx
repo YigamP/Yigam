@@ -95,10 +95,10 @@ const LoginLayout = () => {
                         <RiKakaoTalkFill size={25} />
                         <span>카카오톡 로그인</span>
                     </S.KakaoLogin>
-                    <S.GoogleLogin onClick={handleGoogleLogin}>
+                    {/* <S.GoogleLogin onClick={handleGoogleLogin}>
                         <FcGoogle size={25} />
                         <span>구글 로그인</span>
-                    </S.GoogleLogin>
+                    </S.GoogleLogin> */}
                     <S.LinkText>
                         회원이 아니시라구요? <Link to="/join">회원가입 하러가기</Link>
                     </S.LinkText>

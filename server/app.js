@@ -49,7 +49,7 @@ passport.use(
         {
             clientID: GOOGLE_CLIENT_ID,
             clientSecret: GOOGLE_CLIENT_SECRET,
-            callbackURL: 'http://localhost:8000/auth/google/callback' // 로그인 후 리디렉션될 URL
+            callbackURL: 'http://158.247.255.4:4545/auth/google/callback' // 로그인 후 리디렉션될 URL
         },
         async (accessToken, refreshToken, profile, done) => {
             try {
@@ -106,7 +106,7 @@ passport.use(
         {
             clientID: KAKAO_CLIENT_ID,
             clientSecret: KAKAO_CLIENT_SECRET,
-            callbackURL: 'http://localhost:8000/auth/kakao/callback' // 로그인 후 리디렉션될 URL
+            callbackURL: 'http://158.247.255.4:4545/auth/kakao/callback' // 로그인 후 리디렉션될 URL
         },
         async (accessToken, refreshToken, profile, done) => {
             console.log(profile);
@@ -207,7 +207,7 @@ app.get(
         res.locals.token = token;
         const twentyFourHours = 24 * 60 * 60 * 1000;
         res.cookie('token', token, { maxAge: twentyFourHours, httpOnly: false });
-        res.redirect('http://localhost:5173');
+        res.redirect('http://158.247.255.4:3000');
     }
 );
 
@@ -224,7 +224,7 @@ app.get(
         const twentyFourHours = 24 * 60 * 60 * 1000;
         res.cookie('token', token, { maxAge: twentyFourHours, httpOnly: false });
         console.log(token);
-        res.redirect('http://localhost:5173');
+        res.redirect('http://158.247.255.4:3000');
     }
 );
 
@@ -239,7 +239,7 @@ app.use((err, req, res, _next) => {
 });
 
 // 서버의 포트 설정
-const PORT = 8000; // 포트가 지정되어 있지 않으면 기본값으로 3000을 사용
+const PORT = 4545; // 포트가 지정되어 있지 않으면 기본값으로 3000을 사용
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

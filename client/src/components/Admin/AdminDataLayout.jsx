@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
 const AdminDataLayout = () => {
     const handleChangeFile = async e => {
         const file = e.target.files[0];
-        const serverUrl = 'http://localhost:5000/searches/upload';
+        const serverUrl = `http://${window.location.hostname}:5000/searches/upload`;
         if (file) {
             try {
                 const formData = new FormData();
@@ -40,7 +40,7 @@ const AdminDataLayout = () => {
 
     const downloadFile = () => {
         // 서버 URL 설정
-        const serverURL = 'http://localhost:5000/searches/download';
+        const serverURL = `http://${window.location.hostname}:5000/searches/download`;
 
         // Axios를 사용하여 서버에 GET 요청을 보냄
         axios({
