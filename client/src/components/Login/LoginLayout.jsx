@@ -32,7 +32,7 @@ const LoginLayout = () => {
         if (email && password) {
             try {
                 const result = await API.post('/users/login', { email, password });
-                localStorage.setItem('token', result.data.token);
+                sessionStorage.setItem('token', result.data.token);
                 setUserInfo(result.data.user);
                 Swal.fire({
                     title: '알림',
@@ -56,6 +56,13 @@ const LoginLayout = () => {
                 button: 'OK'
             });
         }
+    };
+
+    const handleGoogleLogin = () => {
+        window.location.assign(`${API.serverUrl}/auth/google`);
+    };
+    const handleKakaoLogin = () => {
+        window.location.assign(`${API.serverUrl}/auth/kakao`);
     };
 
     return (
@@ -84,11 +91,11 @@ const LoginLayout = () => {
                     <S.BtnContainer>
                         <DefaultBtn title="로그인" fill type="button" onClick={handleLogin} />
                     </S.BtnContainer>
-                    <S.KakaoLogin>
+                    <S.KakaoLogin onClick={handleKakaoLogin}>
                         <RiKakaoTalkFill size={25} />
                         <span>카카오톡 로그인</span>
                     </S.KakaoLogin>
-                    <S.GoogleLogin>
+                    <S.GoogleLogin onClick={handleGoogleLogin}>
                         <FcGoogle size={25} />
                         <span>구글 로그인</span>
                     </S.GoogleLogin>

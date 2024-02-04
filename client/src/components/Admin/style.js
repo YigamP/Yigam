@@ -145,6 +145,25 @@ export const DataBtn = styled.button`
     }
 `;
 
+export const fileLabel = styled.label`
+    width: 150px;
+    padding: 10px;
+    background-color: ${({ color }) => color};
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 7px;
+    border: ${({ color }) => (color === '#fff' ? '1px solid #111' : 'none')};
+    border-radius: 4px;
+    outline: none;
+    cursor: pointer;
+    span {
+        font-size: 16px;
+        font-weight: 500;
+        color: ${({ color }) => (color === '#fff' ? '#111' : '#fff')};
+    }
+`;
+
 export const BetweenBox = styled.div`
     display: flex;
     gap: 20px;

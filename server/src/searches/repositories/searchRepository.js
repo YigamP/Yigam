@@ -32,6 +32,21 @@ class SearchHistoryRepository {
             throw new Error(err);
         }
     }
+
+    static async addSearchData({ content, email, nickname }) {
+        try {
+            return await prisma.search_history.create({
+                data: {
+                    user_email: email,
+                    nickname,
+                    search: content,
+                    created_at: new Date()
+                }
+            });
+        } catch (err) {
+            throw new Error(err);
+        }
+    }
 }
 
 export { SearchHistoryRepository };

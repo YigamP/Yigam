@@ -5,7 +5,7 @@ import { useEffect } from 'react';
 const JoinPage = () => {
     const navigation = useNavigate();
     useEffect(() => {
-        if (localStorage.getItem('token')) {
+        if (sessionStorage.getItem('token')) {
             navigation('/');
         }
     }, []);

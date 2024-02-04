@@ -7,7 +7,7 @@ const imgUrl = 'http://' + window.location.hostname + ':' + backendPort + '/uplo
 async function get(endpoint, params = '') {
     return axios.get(serverUrl + endpoint + '/' + params, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
     });
 }
@@ -18,7 +18,7 @@ async function post(endpoint, data) {
     return axios.post(serverUrl + endpoint, bodyData, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
     });
 }
@@ -29,7 +29,7 @@ async function patch(endpoint, data) {
     return axios.patch(serverUrl + endpoint, bodyData, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
     });
 }
@@ -38,7 +38,7 @@ async function formPost(endpoint, data) {
     return axios.post(serverUrl + endpoint, data, {
         headers: {
             'Content-Type': 'multipart/form-data',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
     });
 }
@@ -49,7 +49,7 @@ async function put(endpoint, data) {
     return axios.put(serverUrl + endpoint, bodyData, {
         headers: {
             'Content-Type': 'application/json',
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
     });
 }
@@ -57,7 +57,7 @@ async function put(endpoint, data) {
 async function del(endpoint, params = '') {
     return axios.delete(serverUrl + endpoint + '/' + params, {
         headers: {
-            Authorization: `Bearer ${localStorage.getItem('token')}`
+            Authorization: `Bearer ${sessionStorage.getItem('token')}`
         }
     });
 }
