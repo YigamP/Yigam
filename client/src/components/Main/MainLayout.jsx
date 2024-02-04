@@ -15,16 +15,16 @@ import Swal from 'sweetalert2';
 
 const columns = [
     { id: 'number', label: '번호', minWidth: 70 },
-    { id: 'question', label: '질문 내용', minWidth: 350 },
+    { id: 'question', label: '질문 내용', minWidth: 340 },
     {
         id: 'answer',
         label: '답변내용',
-        minWidth: 350
+        minWidth: 340
     },
     {
-        id: 'percent',
+        id: 'accuracy',
         label: '정확도 ',
-        minWidth: 70
+        minWidth: 100
     }
 ];
 
@@ -33,9 +33,29 @@ const MainLayout = () => {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [inquiry, setInquiry] = useState('');
+    const [search, setSearch] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
+    const [aiData, setAiData] = useState([]);
 
     const handleChangeInquiry = e => {
         setInquiry(e.target.value);
+    };
+
+    const handleChangeSearch = e => {
+        setSearch(e.target.value);
+    };
+
+    const onClickSearch = async () => {
+        try {
+            setIsLoading(true);
+            const result = await API.post('/searches', { content: search });
+            if (result) {
+                setIsLoading(false);
+                setAiData(result.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     const handleReqInquiry = async () => {
@@ -66,51 +86,20 @@ const MainLayout = () => {
         setPage(0);
     };
 
-    const createData = (question, answer, percent) => {
-        return { question, answer, percent };
-    };
-
-    const rows = [
-        createData(
-            '5번선지의 아는체하다 는 어떤것끼리 결합한건지 알려주세요',
-            '는 관형사형 본용언 + (의존명사 + 하다/싶다) 조용언의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습의 형태로 결합되어있습니다.',
-            '90.75'
-        ),
-        createData(
-            '5번선지의 아는체하다 는 어떤것끼리 결합한건지 알려주세요',
-            '는 관형사형 본용언 + (의존명사 + 하다/싶다) 보조용언의 형태로 결합되어있습니다.',
-            '90.75'
-        ),
-        createData(
-            '5번선지의 아는체하다 는 어떤것끼리 결합한건지 알려주세요',
-            '는 관형사형 본용언 + (의존명사 + 하다/싶다) 보조용언의 형태로 결합되어있습니다.',
-            '90.75'
-        ),
-        createData(
-            '5번선지의 아는체하다 는 어떤것끼리 결합한건지 알려주세요',
-            '는 관형사형 본용언 + (의존명사 + 하다/싶다) 보조용언의 형태로 결합되어있습니다.',
-            '90.75'
-        ),
-        createData(
-            '5번선지의 아는체하다 는 어떤것끼리 결합한건지 알려주세요',
-            '는 관형사형 본용언 + (의존명사 + 하다/싶다) 보조용언의 형태로 결합되어있습니다.',
-            '90.75'
-        ),
-        createData(
-            '5번선지의 아는체하다 는 어떤것끼리 결합한건지 알려주세요',
-            '는 관형사형 본용언 + (의존명사 + 하다/싶다) 보조용언의 형태로 결합되어있습니다.',
-            '90.75'
-        )
-    ];
-
     return (
         <Wrapper>
             <S.MainContainer>
                 <S.Title>이감 QA 검색</S.Title>
                 <S.SubTitle>이감 교재 Q/A에 대한 답변을 검색하거나 질문하세요.</S.SubTitle>
                 <S.InnputBox>
-                    <S.Input type="text" placeholder="질문을 입력해주세요." />
-                    <S.Button color="#9C39FF ">검색하기</S.Button>
+                    <S.Input
+                        type="text"
+                        placeholder="질문을 입력해주세요."
+                        onChange={handleChangeSearch}
+                    />
+                    <S.Button color="#9C39FF" onClick={onClickSearch}>
+                        검색하기
+                    </S.Button>
                 </S.InnputBox>
                 <S.InnputBox>
                     <S.Input
@@ -123,64 +112,66 @@ const MainLayout = () => {
                         문의하기
                     </S.Button>
                 </S.InnputBox>
-
-                <S.LoadingContainer>
-                    <CircularProgress color="secondary" />
-                    <S.LoadingText>AI 모델이 답변 중입니다. 잠시만 기다려주세요.</S.LoadingText>
-                </S.LoadingContainer>
-
-                <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: '50px' }}>
-                    <TableContainer sx={{ maxHeight: 440 }}>
-                        <Table stickyHeader aria-label="sticky table">
-                            <TableHead>
-                                <TableRow>
-                                    {columns.map(column => (
-                                        <TableCell
-                                            key={column.id}
-                                            align={column.align}
-                                            style={{ minWidth: column.minWidth }}
-                                        >
-                                            {column.label}
-                                        </TableCell>
-                                    ))}
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {rows
-                                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                    .map((row, index) => {
-                                        return (
-                                            <TableRow hover tabIndex={-1} key={row.number}>
-                                                {columns.map(column => {
-                                                    const value =
-                                                        column.id === 'number'
-                                                            ? index + 1
-                                                            : row[column.id];
-                                                    return (
-                                                        <TableCell
-                                                            key={column.id}
-                                                            align={column.align}
-                                                        >
-                                                            <div>{value}</div>
-                                                        </TableCell>
-                                                    );
-                                                })}
-                                            </TableRow>
-                                        );
-                                    })}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                    <TablePagination
-                        rowsPerPageOptions={[10, 30, 100]}
-                        component="div"
-                        count={rows.length}
-                        rowsPerPage={rowsPerPage}
-                        page={page}
-                        onPageChange={handleChangePage}
-                        onRowsPerPageChange={handleChangeRowsPerPage}
-                    />
-                </Paper>
+                {isLoading && (
+                    <S.LoadingContainer>
+                        <CircularProgress color="secondary" />
+                        <S.LoadingText>AI 모델이 답변 중입니다. 잠시만 기다려주세요.</S.LoadingText>
+                    </S.LoadingContainer>
+                )}
+                {aiData.length > 0 && (
+                    <Paper sx={{ width: '100%', overflow: 'hidden', marginTop: '50px' }}>
+                        <TableContainer sx={{ maxHeight: 440 }}>
+                            <Table stickyHeader aria-label="sticky table">
+                                <TableHead>
+                                    <TableRow>
+                                        {columns.map(column => (
+                                            <TableCell
+                                                key={column.id}
+                                                align={column.align}
+                                                style={{ minWidth: column.minWidth }}
+                                            >
+                                                {column.label}
+                                            </TableCell>
+                                        ))}
+                                    </TableRow>
+                                </TableHead>
+                                <TableBody>
+                                    {aiData
+                                        .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                        .map((row, index) => {
+                                            return (
+                                                <TableRow hover tabIndex={-1} key={index}>
+                                                    {columns.map(column => {
+                                                        const value =
+                                                            column.id === 'number'
+                                                                ? index + 1
+                                                                : row[column.id];
+                                                        return (
+                                                            <TableCell
+                                                                key={column.id}
+                                                                align={column.align}
+                                                            >
+                                                                <div>{value}</div>
+                                                            </TableCell>
+                                                        );
+                                                    })}
+                                                </TableRow>
+                                            );
+                                        })}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                        <TablePagination
+                            rowsPerPageOptions={[10, 30, 100]}
+                            component="div"
+                            count={aiData.length}
+                            rowsPerPage={rowsPerPage}
+                            page={page}
+                            onPageChange={handleChangePage}
+                            onRowsPerPageChange={handleChangeRowsPerPage}
+                        />
+                    </Paper>
+                )}
             </S.MainContainer>
         </Wrapper>
     );
