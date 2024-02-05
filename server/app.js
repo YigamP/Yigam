@@ -238,6 +238,11 @@ app.use((err, req, res, _next) => {
     res.send(err);
 });
 
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something went wrong!');
+});
+
 // 서버의 포트 설정
 const PORT = 4545; // 포트가 지정되어 있지 않으면 기본값으로 3000을 사용
 app.listen(PORT, () => {

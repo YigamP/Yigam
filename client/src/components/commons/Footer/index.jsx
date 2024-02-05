@@ -7,7 +7,7 @@ const Footer = () => {
             <Container>
                 <S.FooterContents>
                     <S.FooterLogoContainer>
-                        <img src="/assets/logo.png" alt="로고 이미지" />
+                        <img src="/assets/foot_logo.png" alt="로고 이미지" />
                     </S.FooterLogoContainer>
                     <p>
                         (주)이감 / 대표자: 김봉소 / 사업자등록번호: 120-87-85755 /
